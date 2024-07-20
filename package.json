@@ -1,9 +1,9 @@
 {
   "name": "@datacables/react",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
   "main": "./src/index.ts",
-  "types": "./src/types/Main.d.ts",
+  "types": "./src/types/main.d.ts",
   "scripts": {
     "lint": "eslint . --max-warnings 0"
   },
