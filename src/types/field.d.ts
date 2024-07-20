@@ -6,8 +6,8 @@ declare module "datacables/field" {
     default?: string;
     attributes?: DatacablesFieldAttribute;
     render?: DatacablesFieldRender;
-    choices?: (FieldDetail | string)[];
-    validators?: FieldValidator[];
+    choices?: (DatacablesFieldDetail | string)[];
+    validators?: DatacablesFieldValidator[];
   }
 
   // TODO(AbhiShake1): pull keys from actual html elements once everything is compatible
