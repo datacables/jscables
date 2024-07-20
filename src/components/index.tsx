@@ -1,5 +1,6 @@
-import { DatacablesField } from "datacables";
+import { DatacablesField as FieldType, Form } from "datacables";
 import { } from "./radio-input-field"
+import { useDatacables } from "../contexts";
 
 export { RadioInputField, type RadioInputFieldProps } from './radio-input-field'
 export { PasswordInputField, type PasswordInputFieldProps } from './password-input-field'
@@ -12,33 +13,39 @@ export { EmailInputField, type EmailInputFieldProps } from './email-input-field'
 export { CheckboxInputField, type CheckboxInputFieldProps } from './checkbox-input-field'
 
 
-export interface DatacablesProps extends DatacablesField { }
+export interface DatacablesFieldProps extends FieldType { }
 
 export type DatacablesFieldComponent<T extends keyof JSX.IntrinsicElements> = React.FC<JSX.IntrinsicElements[T]>;
 
-export function Datacables({
+export function DatacablesField({
   name,
+  label,
+  choices,
+  attributes: {
+    is_null: disabled,
+    is_required: required,
+  } = {
+    is_null: false,
+    is_required: false,
+  },
+  validators,
   type,
   render: { placeholder, input } = {
     input: "text",
   },
   default: defaultValue,
-  //   ...extraFieldProps
-}: DatacablesProps) {
-  return null
-  // const Field = fields[type]!;
+  ...props
+}: DatacablesFieldProps) {
+  const Fields = useDatacables();
 
-  // return <Field {...{ name, type, placeholder, defaultValue, input }} />;
+  const Field = Fields[type].render;
+
+  return <>
+    <label htmlFor={name}>{label}</label>
+    <Field {...{ name, type, placeholder, defaultValue, input, disabled, required }} {...props} />
+  </>
 }
 
-// export const fields: Record<DatacablesProps['type'], any> = {
-//   password: PasswordInputField,
-//   number: NumberInputField,
-//   radio: RadioInputField,
-//   select: SelectInputField,
-//   checkbox: PasswordInputField,
-//   text: PasswordInputField,
-//   date: PasswordInputField,
-//   file: PasswordInputField,
-//   email: PasswordInputField,
-// };
+export function Datacables({ fields }: Form) {
+  return <>{fields.map(props => <DatacablesField {...props} />)}</>;
+}
