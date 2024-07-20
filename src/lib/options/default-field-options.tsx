@@ -1,5 +1,19 @@
 import { CheckboxInputField, DateInputField, EmailInputField, FileInputField, NumberInputField, PasswordInputField, RadioInputField, SelectInputField, TextInputField } from "../../components";
-import { FieldOptions, Validator } from "../../contexts/datacables-contexts";
+import type { DatacablesFieldRender, DatacablesFieldType } from "datacables";
+
+export type Validator<Params extends Record<string, unknown> = Record<string, unknown>> = {
+  function: string;
+  message: string;
+  params?: Params;
+  validator: (params: Params) => boolean | undefined;
+}
+
+export type FieldOptions = {
+  [K in DatacablesFieldType]: {
+    render?: (props: DatacablesFieldRender) => React.ReactNode;
+    validators?: Validator[];
+  }
+}
 
 // TODO(AbhiShake1): make this the const source of truth for `FieldType`
 export const defaultFieldOptions = {
