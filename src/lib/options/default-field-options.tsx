@@ -1,12 +1,6 @@
 import { CheckboxInputField, DateInputField, EmailInputField, FileInputField, NumberInputField, PasswordInputField, RadioInputField, SelectInputField, TextInputField } from "../../components";
 import type { DatacablesFieldRender, DatacablesFieldType } from "datacables";
-
-export type Validator<Params extends Record<string, unknown> = Record<string, unknown>> = {
-  function: string;
-  message: string;
-  params?: Params;
-  validator: (params: Params) => boolean | undefined;
-}
+import { Validator } from "./default-validators";
 
 export type FieldOptions = {
   [K in DatacablesFieldType]: {
