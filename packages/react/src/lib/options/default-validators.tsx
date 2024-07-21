@@ -1,6 +1,6 @@
-export type Validator<Params extends Record<string, any> = Record<string, any>> = {
-  function: string;
-  message: string;
+import { DatacablesFieldValidator } from "datacables";
+
+export type Validator<Params extends Record<string, any> = Record<string, any>> = DatacablesFieldValidator & {
   params?: Params;
   validator: (params: Params) => boolean | undefined;
 }
@@ -9,7 +9,7 @@ export const defaultValidators = [
   {
     function: 'required',
     message: 'This field is required',
-    validator: (params) => params.value !== undefined,
+    validator: (params) => !!params.value,
   },
   {
     function: 'minLength',

@@ -1,7 +1,7 @@
 import React from "react";
-import { defaultValidators } from "../lib/options/default-validators";
+import { defaultValidators, Validator } from "../lib/options/default-validators";
 
-export const DatacablesValidatorContext = React.createContext(defaultValidators);
+export const DatacablesValidatorContext = React.createContext<Validator[]>(defaultValidators);
 
 export function useDatacablesValidators() {
   return React.useContext(DatacablesValidatorContext);

@@ -12,7 +12,6 @@ export { FileInputField, type FileInputFieldProps } from './file-input-field'
 export { EmailInputField, type EmailInputFieldProps } from './email-input-field'
 export { CheckboxInputField, type CheckboxInputFieldProps } from './checkbox-input-field'
 
-
 export interface DatacablesFieldProps extends FieldType { }
 
 export type DatacablesFieldComponent<T extends keyof JSX.IntrinsicElements> = React.FC<JSX.IntrinsicElements[T]>;
@@ -41,7 +40,7 @@ export function DatacablesField({
   const Field = Fields[type].render;
 
   return <>
-    <label htmlFor={name}>{label}</label>
+    <label htmlFor={name}>{label}{required && <span className="required">*</span>}</label>
     <Field {...{ name, type, placeholder, defaultValue, input, disabled, required }} {...props} />
   </>
 }
