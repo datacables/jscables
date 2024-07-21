@@ -1,6 +1,7 @@
-import { DatacablesField } from "datacables";
+import { DatacablesFieldRender } from "datacables";
 
-export interface DateInputFieldProps extends React.HTMLAttributes<HTMLInputElement>, DatacablesField { }
+export type DateInputFieldProps = JSX.IntrinsicElements["input"] & DatacablesFieldRender & {
+}
 
 export function DateInputField(props: DateInputFieldProps) {
   return <input {...props} type="date" />;

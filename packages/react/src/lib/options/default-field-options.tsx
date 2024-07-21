@@ -25,17 +25,6 @@ export const defaultFieldOptions = {
   },
   text: {
     render: (props) => <TextInputField {...props} />,
-    validators: [
-      {
-        function: "regex",
-        validator: ({ value, regex } = {}) => new RegExp(regex as string).test(value as string),
-        message: "Pattern does not match",
-        params: {
-          regex: "abc.+",
-          value: "__this__.value",
-        }
-      }
-    ],
   },
   email: {
     render: (props) => <EmailInputField {...props} />,
@@ -59,20 +48,3 @@ export const defaultFieldOptions = {
   },
 } satisfies FieldOptions;
 
-const defaultValidators: Validator[] = [
-  {
-    function: "regex",
-    validator: ({ value, regex } = {}) => new RegExp(regex as string).test(value as string),
-    message: "Pattern does not match",
-    params: {
-      regex: "abc.+",
-      value: "__this__.value",
-    }
-  },
-  {
-    function: "required",
-    message: "This field is required",
-    params: {},
-    validator: ({ value } = {}) => value !== undefined,
-  }
-];

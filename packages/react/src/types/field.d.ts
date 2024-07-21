@@ -42,6 +42,6 @@ declare module "datacables/field" {
   interface DatacablesFieldValidator {
     function: string;
     message: string;
-    params: Record<string, any>;
+    params?: Record<string, any>;
   }
 }
