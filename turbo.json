@@ -1,0 +1,77 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "remoteCache": {
+    "signature": true
+  },
+  "ui": "tui",
+  "globalDependencies": [
+    ".github/.cache-version",
+    "jest.*.ts",
+    "package.json",
+    "package-lock.json",
+    "tsconfig.json",
+    "tsconfig.*.json",
+    "scripts/subpath-workaround.mjs"
+  ],
+  "globalEnv": [
+    "CLERK_*",
+    "GATSBY_CLERK_*",
+    "NEXT_PUBLIC_CLERK_*",
+    "PUBLIC_CLERK_*",
+    "NODE_ENV",
+    "NODE_VERSION",
+    "NPM_VERSION",
+    "TZ",
+    "VERCEL",
+    "VITE_CLERK_*",
+    "EXPO_PUBLIC_CLERK_*",
+    "REACT_APP_CLERK_*"
+  ],
+  "globalPassThroughEnv": ["GITHUB_TOKEN", "ACTIONS_RUNNER_DEBUG", "ACTIONS_STEP_DEBUG"],
+  "tasks": {
+    "dev": {
+      "cache": false
+    },
+    "dev:current": {
+      "cache": false,
+      "dependsOn": ["^build", "dev"],
+      "persistent": true
+    },
+    "clean": {
+      "cache": false
+    },
+    "lint": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.json",
+        "**/*.md",
+        "**/*.mdx",
+        ".github/**",
+        "!*/package.json",
+        "!**/__snapshots__/**",
+        "!CHANGELOG.md",
+        "!coverage/**",
+        "!dist/**",
+        "!examples/**",
+        "!node_modules/**"
+      ],
+      "outputs": []
+    },
+    "lint:publint": {
+      "dependsOn": ["build"],
+      "outputs": [],
+      "cache": false
+    },
+    "lint:attw": {
+      "outputs": [],
+      "cache": false
+    },
+    "format:check": {
+      "outputs": []
+    }
+  }
+}
