@@ -37,7 +37,7 @@ export function DatacablesField({
 }: DatacablesFieldProps) {
   const Fields = useDatacables();
 
-  const Field = Fields[type].render;
+  const Field = Fields[type].render || Fields.$default.render;
 
   return <>
     <label htmlFor={name}>{label}{required && <span className="required">*</span>}</label>

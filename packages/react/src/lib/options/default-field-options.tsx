@@ -2,11 +2,15 @@ import { CheckboxInputField, DateInputField, EmailInputField, FileInputField, Nu
 import type { DatacablesFieldRender, DatacablesFieldType } from "datacables";
 import { Validator } from "./default-validators";
 
+export interface RendererAndValidators {
+  render?: (props: DatacablesFieldRender) => React.ReactNode;
+  validators?: Validator[];
+}
+
 export type FieldOptions = {
-  [K in DatacablesFieldType]: {
-    render?: (props: DatacablesFieldRender) => React.ReactNode;
-    validators?: Validator[];
-  }
+  [K in DatacablesFieldType]: RendererAndValidators;
+} & {
+  $default: RendererAndValidators;
 }
 
 // TODO(AbhiShake1): make this the const source of truth for `FieldType`
@@ -45,6 +49,9 @@ export const defaultFieldOptions = {
   password: {
     render: (props) => <PasswordInputField {...props} />,
     validators: [],
+  },
+  $default: {
+    render: (props) => <TextInputField {...props} />,
   },
 } satisfies FieldOptions;
 
