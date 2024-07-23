@@ -1,16 +1,16 @@
 import React from "react";
-import { defaultValidators, Validator } from "../lib/options/default-validators";
+import { _toInternal, defaultValidators } from "../lib/options/default-validators";
 
-export const DatacablesValidatorContext = React.createContext<Validator[]>(defaultValidators);
+export const DatacablesValidatorContext = React.createContext(defaultValidators);
 
 export function useDatacablesValidators() {
   return React.useContext(DatacablesValidatorContext);
 }
 
 export function useDatacablesValidator(
-  validator: NonNullable<ReturnType<typeof useDatacablesValidators>>[number]['function']
+  validator: keyof ReturnType<typeof useDatacablesValidators>
 ) {
   const validators = useDatacablesValidators();
-  return validators.find(v => v.function === validator);
+  validators.max
+  return validators[validator];
 }
-

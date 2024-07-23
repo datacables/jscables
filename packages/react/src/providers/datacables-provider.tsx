@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { DatacablesContext } from "../contexts/datacables-contexts";
 import { defaultFieldOptions, FieldOptions } from "../lib/options/default-field-options";
-import { Validator } from "../lib/options/default-validators";
+import { _toInternal, Validator } from "../lib/options/default-validators";
 import { DatacablesValidatorContext } from "../contexts";
 import { defaultValidators } from "../lib/options/default-validators";
 
@@ -12,16 +12,21 @@ export interface DatacablesProviderProps {
 }
 
 export function DatacablesProvider({ children, fieldOptions, validators }: DatacablesProviderProps) {
-  return <DatacablesValidatorContext.Provider value={{
-    ...defaultValidators,
-    ...validators,
-  }}>
+  const _defaultValidators = useMemo(() => _toInternal(defaultValidators), []);
+  const _validators = useMemo(() => _toInternal(validators), [validators]);
+  const _datacablesValidators = React.useMemo(() => ({
+    ..._defaultValidators,
+    ..._validators,
+  }), [_defaultValidators, _validators])
+
+  return <DatacablesValidatorContext.Provider value={_datacablesValidators}>
     <DatacablesContext.Provider
       value={{
         ...fieldOptions,
         ...defaultFieldOptions,
-      }}>{children}</DatacablesContext.Provider>;
-
+      }}>
+      {children}
+    </DatacablesContext.Provider>
   </DatacablesValidatorContext.Provider>
 }
 

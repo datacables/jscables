@@ -2,10 +2,10 @@ import { DatacablesFieldValidator } from "datacables";
 
 export type Validator<Params extends Record<string, any> = Record<string, any>> = DatacablesFieldValidator & {
   params?: Params;
-  validator: (params: Params) => boolean | undefined;
+  validator: (params: Params & { value: any }) => boolean | undefined;
 }
 
-export const defaultValidators = [
+export const defaultValidators = _toInternal([
   {
     function: 'required',
     message: 'This field is required',
@@ -19,7 +19,7 @@ export const defaultValidators = [
     },
     validator: (params) =>
       params.value &&
-      params.value.toString().length >= params.min,
+      params.value.toString().length >= (params.min ?? 0),
   },
   {
     function: 'maxLength',
@@ -27,7 +27,7 @@ export const defaultValidators = [
     params: {
       max: 0,
     },
-    validator: (params) => params.value?.length <= params.max,
+    validator: (params) => params.value?.length <= (params.max ?? 0),
   },
   {
     function: 'min',
@@ -35,7 +35,7 @@ export const defaultValidators = [
     params: {
       min: 0,
     },
-    validator: (params) => params.value >= params.min,
+    validator: (params) => params.value >= (params.min ?? 0),
   },
   {
     function: 'max',
@@ -43,7 +43,7 @@ export const defaultValidators = [
     params: {
       max: 0,
     },
-    validator: (params) => params.value <= params.max,
+    validator: (params) => params.value <= (params.max ?? 0),
   },
   {
     function: 'email',
@@ -114,4 +114,11 @@ export const defaultValidators = [
       && params.value >= params.min
       && params.value <= params.max,
   },
-] satisfies Validator[]
+])
+
+export function _toInternal<T extends Record<string, any>>(validators: Validator<T>[]) {
+  return validators.reduce((acc, v) => {
+    return { ...acc, [v.function]: v };
+  }, {} as T);
+}
+
