@@ -12,12 +12,11 @@ export interface DatacablesProviderProps {
 }
 
 export function DatacablesProvider({ children, fieldOptions, validators }: DatacablesProviderProps) {
-  const _defaultValidators = useMemo(() => _toInternal(defaultValidators), []);
   const _validators = useMemo(() => _toInternal(validators), [validators]);
   const _datacablesValidators = React.useMemo(() => ({
-    ..._defaultValidators,
+    ...defaultValidators,
     ..._validators,
-  }), [_defaultValidators, _validators])
+  }), [defaultValidators, _validators])
 
   return <DatacablesValidatorContext.Provider value={_datacablesValidators}>
     <DatacablesContext.Provider
