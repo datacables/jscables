@@ -119,10 +119,9 @@ export const defaultValidators = _toInternal([
 type Single<T> = T extends Array<infer U> ? U : never;
 
 export function _toInternal<T extends Record<string, any>>(validators: Validator<T>[]) {
-  type Acc = { [key: Single<typeof validators>['function']]: Single<typeof validators> }
   return validators.reduce((acc, v) => {
-    const _acc = acc as Acc
+    const _acc = acc as { [K in Single<typeof validators>['function']]: Single<typeof validators> } | undefined
     return { [v.function]: v, ..._acc };
-  }, {} as Acc);
+  }, {} as T);
 }
 

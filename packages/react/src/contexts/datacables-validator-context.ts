@@ -11,6 +11,5 @@ export function useDatacablesValidator(
   validator: keyof ReturnType<typeof useDatacablesValidators>
 ) {
   const validators = useDatacablesValidators();
-  validators.max
   return validators[validator];
 }
