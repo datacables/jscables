@@ -1,6 +1,7 @@
 import { DatacablesFieldValidator } from "datacables";
 
-export type Validator<Params extends Record<string, any> = Record<string, any>> = DatacablesFieldValidator & {
+export type Validator<F extends string = string, Params extends Record<F, any> = Record<string, any>> = DatacablesFieldValidator & {
+  function: F;
   params?: Params;
   validator: (params: Params & { value: any }) => boolean | undefined;
 }
@@ -116,10 +117,8 @@ export const defaultValidators = _toInternal([
   },
 ])
 
-type Single<T> = T extends Array<infer U> ? U : never;
-
-export function _toInternal<T extends Record<string, any>>(validators: Validator<T>[]) {
-  type Acc = { [key: Single<typeof validators>['function']]: Single<typeof validators> }
+export function _toInternal<F extends string, T extends Record<string, any>>(validators: Validator<F, T>[]) {
+  type Acc = { [fn in typeof validators[number]['function']]: fn }
   return validators.reduce((acc, v) => {
     const _acc = acc as Acc
     return { [v.function]: v, ..._acc };

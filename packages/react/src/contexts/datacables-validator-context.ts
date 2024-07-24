@@ -8,8 +8,8 @@ export function useDatacablesValidators() {
 }
 
 export function useDatacablesValidator(
-  validator: keyof ReturnType<typeof useDatacablesValidators>
+  validator: keyof typeof DatacablesValidatorContext
 ) {
   const validators = useDatacablesValidators();
-  return validators[validator];
+  return validators[validator as keyof typeof defaultValidators] ?? validators.required;
 }
